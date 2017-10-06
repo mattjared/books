@@ -16,20 +16,20 @@ class App extends Component {
   }
   handleChange(e) {
     this.setState({
-      [e.target.name]: e.target.value,
-    })
+      [e.target.name]: e.target.value
+    });
   }
   handleSubmit(e) {
     e.preventDefault();
-    const items = {
+    const item = {
       title: this.state.currentItem,
-      username: this.state.username,
+      user: this.state.username
     }
-    itemsRef.push(items);
+    itemsRef.push(item);
     this.setState({
       currentItem: '',
-      username: '',
-    })
+      username: ''
+    });
   }
   handleDelete(itemId){
     const itemRef = firebase.database().ref(`/items/${itemId}`);
@@ -43,12 +43,12 @@ class App extends Component {
         newState.push({
           id: item,
           title: items[item].title,
-          user: items[item].user,
+          user: items[item].user
         });
       }
       this.setState({
         items: newState,
-      })
+      });
     });
   }
   render() {
@@ -62,10 +62,10 @@ class App extends Component {
         </header>
         <div className='container'>
           <section className='add-item'>
-              <form>
+              <form onSubmit={this.handleSubmit}>
                   <input type="text" name="username" placeholder="What's your name?" onChange={this.handleChange} value={this.state.username}/>
                   <input type="text" name="currentItem" placeholder="What book did you read?" onChange={this.handleChange} value={this.state.currentItem}/>
-                <button onClick={this.handleSubmit}>Add Item</button>
+                <button>Add Item</button>
               </form>
           </section>
           <section className='display-item'>
